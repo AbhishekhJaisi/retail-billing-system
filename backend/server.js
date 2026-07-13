@@ -5,6 +5,7 @@ const cors = require('cors');
 const Sequelize = require('./config/database');
 
 const authRoutes = require('./routes/auth');
+const productRoutes = require('./routes/product');
 
 const app = express();
 
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use('/api', authRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/product', productRoutes);
 
 app.use(cors({
     origin: 'http:localhost:5173',
