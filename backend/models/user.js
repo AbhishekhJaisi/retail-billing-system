@@ -6,7 +6,10 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
+      User.hasMany(models.Product, {
+        foreignKey: 'shop_id',
+        as: 'products'
+      });
     }
   }
   User.init({
@@ -30,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'admin' // Always defaults to admin
-    }
+    },
   }, {
     sequelize,
     modelName: 'User',
