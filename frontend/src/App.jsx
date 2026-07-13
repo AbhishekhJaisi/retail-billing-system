@@ -1,7 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom'
 import Register from './pages/Register'
 import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
+import Products  from './pages/Products'
 import './App.css'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/products" element={<Products  />} />
       </Routes>
 
       <div className="ticks"></div>

@@ -50,7 +50,7 @@ const Login = () => {
             localStorage.setItem("user", JSON.stringify(user));
             localStorage.setItem("token", token);
 
-            navigate("/dashboard");
+            navigate("/products");
 
         } catch (error) {
             console.error(error);
