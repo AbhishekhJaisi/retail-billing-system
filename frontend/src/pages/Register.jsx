@@ -12,6 +12,7 @@ const Register = () => {
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -57,36 +58,74 @@ const Register = () => {
     return (
         <div className="auth-page">
             <div className="auth-card">
-                <p className="auth-eyebrow">Get started</p>
-                <h1 className="auth-heading">Create your account</h1>
-                <p className="auth-subtext">Set up billing and inventory for your store in a few minutes.</p>
+                <div className="auth-hero">
+                    <p className="auth-eyebrow">Retail Billing System</p>
+                    <h1 className="auth-heading">Create your shop dashboard in minutes.</h1>
+                    <p className="auth-subtext">Set up billing and inventory for your store with a polished, simple workflow.</p>
+                    <div className="auth-highlights">
+                        <span>• Manage products instantly</span>
+                        <span>• Track low stock alerts</span>
+                        <span>• Run your store confidently</span>
+                    </div>
+                </div>
 
-                <form onSubmit={handleSubmit} className="auth-form" noValidate>
-                    {fields.map(({ label, type, placeholder, key, autoComplete }) => (
-                        <div className="field-group" key={key}>
-                            <label htmlFor={key}>{label}</label>
-                            <input
-                                id={key}
-                                type={type}
-                                name={key}
-                                placeholder={placeholder}
-                                value={formData[key]}
-                                onChange={handleChange}
-                                autoComplete={autoComplete}
-                            />
-                        </div>
-                    ))}
+                <div className="auth-form-panel">
+                    <p className="auth-eyebrow">Get started</p>
+                    <h2 className="auth-heading">Create your account</h2>
+                    <p className="auth-subtext">Set up billing and inventory for your store in a few minutes.</p>
 
-                    {error && <p className="auth-error">{error}</p>}
+                    <form onSubmit={handleSubmit} className="auth-form" noValidate>
+                        {fields.map(({ label, type, placeholder, key, autoComplete }) => (
+                            <div className="field-group" key={key}>
+                                <label htmlFor={key}>
+                                    {label}
+                                    <span className="required-mark">*</span>
+                                </label>
+                                {key === 'password' ? (
+                                    <div className="input-with-icon">
+                                        <input
+                                            id={key}
+                                            type={showPassword ? 'text' : 'password'}
+                                            name={key}
+                                            placeholder={placeholder}
+                                            value={formData[key]}
+                                            onChange={handleChange}
+                                            autoComplete={autoComplete}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="password-toggle"
+                                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? '🙈' : '👁'}
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <input
+                                        id={key}
+                                        type={type}
+                                        name={key}
+                                        placeholder={placeholder}
+                                        value={formData[key]}
+                                        onChange={handleChange}
+                                        autoComplete={autoComplete}
+                                    />
+                                )}
+                            </div>
+                        ))}
 
-                    <button type="submit" className="auth-button" disabled={loading}>
-                        {loading ? 'Creating account…' : 'Create account'}
-                    </button>
-                </form>
+                        {error && <p className="auth-error">{error}</p>}
 
-                <p className="auth-footer">
-                    Already have an account? <Link to="/login">Sign in</Link>
-                </p>
+                        <button type="submit" className="auth-button" disabled={loading}>
+                            {loading ? 'Creating account…' : 'Create account'}
+                        </button>
+                    </form>
+
+                    <p className="auth-footer">
+                        Already have an account? <Link to="/login">Sign in</Link>
+                    </p>
+                </div>
             </div>
         </div>
     );
