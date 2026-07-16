@@ -16,7 +16,7 @@ const createProduct = async (data, shopId) => {
     return await Product.create(payload);
 }
 
-const getAllProduct = async (shopId) => {
+const getMyProduct = async (shopId) => {
     return await Product.findAll({
         where: {
             shop_id: shopId,
@@ -26,7 +26,7 @@ const getAllProduct = async (shopId) => {
 }
 
 const getProductById = async(productId) => {
-    return await Product.findOne({
+    return await Product.findAll({
         where: {
             id: productId,
         },
@@ -73,4 +73,4 @@ const deleteProduct = async (id, shopId) => {
     return true;
 }
 
-module.exports = { createProduct, getAllProduct, updateProduct,getProductById, deleteProduct };
+module.exports = { createProduct, getMyProduct, updateProduct,getProductById, deleteProduct };

@@ -1,10 +1,11 @@
-const { createProduct, getAllProduct, updateProduct, deleteProduct } = require('../services/productService');
+const  product  = require('../services/productService');
 const { success, error } = require('../utils/responseHelper');
 
 const create = async (req, res) => {
     try {
-        const product = await createProduct(req.body, req.user.id);
-        return success(res, "Product created successfully", product, 201);
+        const products = await product.createProduct(req.body, req.user.id);
+
+        return success(res, "Product created successfully", products, 201);
     }
     catch (err) {
         return error(res, err.message || 'Unable to create product', null, 500);
@@ -13,7 +14,12 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const products = await getAllProduct(req.user.id);
+        const products = await product.getMyProduct(req.user.id);
+
+        if (products.length === 0) {
+            return error(res, "No item added on cart", null, 401);
+        }
+
         return success(res, "Fetched all products", products, 200);
     }
     catch (err) {
@@ -21,19 +27,20 @@ const getAll = async (req, res) => {
     }
 }
 
-const getProductById = async(req, res) => {
-    try{
-        const product = await getProductById(req.user.id);
-        return success (res, "Fetched product by ID", product, 200);
+const getById = async (req, res) => {
+    try {
+        const products = await product.getProductById(req.params.id);
+        
+        return success(res, "Fetched product by ID", products, 200);
     }
-    catch(err){
+    catch (err) {
         return error(res, err.message || 'Internal Server Error', null, 500);
     }
 }
 
 const update = async (req, res) => {
     try {
-        const product = await updateProduct(req.params.id, req.body, req.user.id);
+        const products = await product.updateProduct(req.params.id, req.body, req.user.id);
         return success(res, "Product updated successfully", product, 200);
     }
     catch (err) {
@@ -51,4 +58,4 @@ const remove = async (req, res) => {
     }
 }
 
-module.exports = { create, getAll, update, remove, getProductById };
+module.exports = { create, getAll, update, remove, getById };
