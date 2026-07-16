@@ -21,6 +21,16 @@ const getAll = async (req, res) => {
     }
 }
 
+const getProductById = async(req, res) => {
+    try{
+        const product = await getProductById(req.user.id);
+        return success (res, "Fetched product by ID", product, 200);
+    }
+    catch(err){
+        return error(res, err.message || 'Internal Server Error', null, 500);
+    }
+}
+
 const update = async (req, res) => {
     try {
         const product = await updateProduct(req.params.id, req.body, req.user.id);
@@ -41,4 +51,4 @@ const remove = async (req, res) => {
     }
 }
 
-module.exports = { create, getAll, update, remove };
+module.exports = { create, getAll, update, remove, getProductById };

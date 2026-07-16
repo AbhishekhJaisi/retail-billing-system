@@ -25,6 +25,15 @@ const getAllProduct = async (shopId) => {
     });
 }
 
+const getProductById = async(productId) => {
+    return await Product.findOne({
+        where: {
+            id: productId,
+        },
+        order: [['createdAt', 'DESC']]
+    })
+}
+
 const updateProduct = async (id, data, shopId) => {
     const product = await Product.findOne({
         where: {
@@ -64,4 +73,4 @@ const deleteProduct = async (id, shopId) => {
     return true;
 }
 
-module.exports = { createProduct, getAllProduct, updateProduct, deleteProduct };
+module.exports = { createProduct, getAllProduct, updateProduct,getProductById, deleteProduct };
