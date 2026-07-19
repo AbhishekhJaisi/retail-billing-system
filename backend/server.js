@@ -9,10 +9,19 @@ const productRoutes = require('./routes/product');
 
 const app = express();
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5173'];
+
+
 // CORS must be configured BEFORE routes
 app.use(cors({
-    origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
-    credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true // only if you're sending cookies/auth headers
 }));
 
 app.use(express.json());
