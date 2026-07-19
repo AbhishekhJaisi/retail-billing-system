@@ -23,9 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
+    unit: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'pcs',
     },
     stock: {
       type: DataTypes.INTEGER,
@@ -44,8 +45,19 @@ module.exports = (sequelize, DataTypes) => {
         model: "Users",
         key: "id"
       }
-    }
-  }, {
+    },
+    cost_price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0
+    },
+    selling_price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0
+    },
+  }, 
+  {
     sequelize,
     modelName: 'Product',
     tableName: 'Products', // Explicitly matching the migration table name

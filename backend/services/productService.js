@@ -3,13 +3,21 @@ const { Product } = require('../models');
 const createProduct = async (data, shopId) => {
     const payload = {
         name: data.name,
-        price: Number(data.price),
+        unit: String(data.unit),
+        cost_price: Number(data.cost_price),
+        selling_price: Number(data.selling_price),
         stock: Number(data.stock),
         lowStockAlert: Number(data.lowStockAlert || 5),
-        shop_id: shopId
+        shop_id: shopId,
     };
 
-    if (!payload.name || Number.isNaN(payload.price) || Number.isNaN(payload.stock) || Number.isNaN(payload.lowStockAlert)) {
+    // console.log(payload.name)
+    // console.log(payload.totalPrice)
+    // console.log(payload.stock)
+    // console.log(payload.lowStockAlert)
+    // console.log(payload.shop_id)
+
+    if (!payload.name ||  Number.isNaN(payload.stock) || Number.isNaN(payload.lowStockAlert) || Number.isNaN(payload.cost_price) || Number.isNaN(payload.selling_price)) {
         throw new Error('Please provide valid product details');
     }
 
@@ -48,7 +56,9 @@ const updateProduct = async (id, data, shopId) => {
 
     const payload = {
         ...(data.name !== undefined && { name: data.name }),
-        ...(data.price !== undefined && { price: Number(data.price) }),
+        ...(data.unit !== undefined && { unit: data.unit }),
+        ...(data.cost_price !== undefined && { cost_price: Number(data.cost_price) }),
+        ...(data.selling_price !== undefined && { selling_price: Number(data.selling_price) }),
         ...(data.stock !== undefined && { stock: Number(data.stock) }),
         ...(data.lowStockAlert !== undefined && { lowStockAlert: Number(data.lowStockAlert) })
     };
@@ -72,5 +82,14 @@ const deleteProduct = async (id, shopId) => {
     await product.destroy();
     return true;
 }
+
+// const getlowStockProduct = async(id, productId) => {
+//     const product = await Product.findAll({
+//         where:{
+//             id,
+//             stock<=0
+//         }
+//     })
+// } 
 
 module.exports = { createProduct, getMyProduct, updateProduct,getProductById, deleteProduct };

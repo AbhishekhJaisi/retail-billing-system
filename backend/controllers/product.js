@@ -2,6 +2,7 @@ const  product  = require('../services/productService');
 const { success, error } = require('../utils/responseHelper');
 
 const create = async (req, res) => {
+    // console.log("Incoming data:", data);
     try {
         const products = await product.createProduct(req.body, req.user.id);
 
