@@ -9,7 +9,7 @@ import EmptyState from '../components/EmptyState';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import './Products.css';
 
-const EMPTY_FORM = { name: '', price: '', stock: '', lowStockAlert: '5' };
+const EMPTY_FORM = { name: '', unit: '', stock: '', lowStockAlert: '5' };
 
 const Products = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Products = () => {
     }
 
     let cancelled = false;
-    setLoading(true);
+    // setLoading(true);
 
     axiosInstance.get('/product')
       .then(res => {
@@ -96,8 +96,10 @@ const Products = () => {
     setEditingProduct(product);
     setFormData({
       name: product.name,
-      price: String(product.price),
+      selling_price: Number(product.selling_price),
+      cost_price: Number(product.cost_price),
       stock: String(product.stock),
+      unit: String(product.unit),
       lowStockAlert: String(product.lowStockAlert),
     });
     setBanner(null);
@@ -117,12 +119,14 @@ const Products = () => {
 
     const payload = {
       name: formData.name.trim(),
-      price: Number(formData.price),
+      selling_price: Number(formData.selling_price),
+      cost_price: Number(formData.cost_price),
       stock: Number(formData.stock),
+      unit: String(formData.unit),
       lowStockAlert: Number(formData.lowStockAlert),
     };
 
-    if (!payload.name || Number.isNaN(payload.price) || Number.isNaN(payload.stock) || Number.isNaN(payload.lowStockAlert)) {
+    if (!payload.name || Number.isNaN(payload.stock) || Number.isNaN(payload.lowStockAlert)) {
       setBanner({ type: 'error', message: 'Please fill in all fields with valid values.' });
       setSubmitting(false);
       return;
@@ -205,15 +209,36 @@ const Products = () => {
 
               <div className="form-row">
                 <label className="form-label">
-                  Price (₹)
+                  Cost Price
                   <input
                     type="number"
-                    min="0"
-                    step="0.01"
-                    value={formData.price}
-                    onChange={e => field('price', e.target.value)}
-                    placeholder="0.00"
+                    value={formData.cost_price}
+                    onChange={e => field('cost_price', e.target.value)}
+                    placeholder="0"
                     required
+                  />
+                </label>
+                <label className="form-label">
+                  Selling Price
+                  <input
+                    type="number"
+                    value={formData.selling_price}
+                    onChange={e => field('selling_price', e.target.value)}
+                    placeholder="0"
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="form-row">
+                <label className="form-label">
+                  Unit
+                  <input
+                    value={formData.unit}
+                    onChange={e => field('unit', e.target.value)}
+                    placeholder="pcs, kg"
+                    required
+                    autoFocus
                   />
                 </label>
 
@@ -229,6 +254,8 @@ const Products = () => {
                   />
                 </label>
               </div>
+
+
 
               <label className="form-label">
                 Low stock alert threshold

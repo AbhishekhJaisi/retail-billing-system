@@ -63,9 +63,9 @@ const Register = () => {
                     <h1 className="auth-heading">Create your shop dashboard in minutes.</h1>
                     <p className="auth-subtext">Set up billing and inventory for your store with a polished, simple workflow.</p>
                     <div className="auth-highlights">
-                        <span>• Manage products instantly</span>
-                        <span>• Track low stock alerts</span>
-                        <span>• Run your store confidently</span>
+                        <span>📦 Manage products instantly</span>
+                        <span>⚡ Track low stock alerts</span>
+                        <span>🔒 Run your store confidently</span>
                     </div>
                 </div>
 

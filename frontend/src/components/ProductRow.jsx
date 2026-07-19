@@ -22,8 +22,12 @@ const ProductRow = ({ product, onEdit, onDelete }) => {
           </div>
         </div>
       </td>
-      <td>₹{Number(product.price).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+      <td>₹{Number(product.cost_price).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+      <td>₹{Number(product.selling_price).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
       <td>{product.stock}</td>
+      <td>
+        <strong>{product.unit}</strong>
+      </td>
       <td>{product.lowStockAlert}</td>
       <td>
         <span className={`status-badge ${status.className}`}>{status.label}</span>
