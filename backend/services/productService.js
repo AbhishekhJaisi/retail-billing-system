@@ -68,10 +68,17 @@ const updateProduct = async (id, data, shopId) => {
 }
 
 const deleteProduct = async (id, shopId) => {
+    const productId = Number(id);
+    const shopIdNumber = Number(shopId);
+
+    if (Number.isNaN(productId) || Number.isNaN(shopIdNumber)) {
+        throw new Error('Invalid product or shop id');
+    }
+
     const product = await Product.findOne({
         where: {
-            id,
-            shop_id: shopId,
+            id: productId,
+            shop_id: shopIdNumber,
         }
     });
 
