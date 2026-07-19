@@ -9,7 +9,13 @@ const productRoutes = require('./routes/product');
 
 const app = express();
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5173'];
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+    : [
+        'http://localhost:5173',
+        'http://localhost:4173',
+        'https://retail-billing-system-lyart.vercel.app',
+      ];
 
 
 // CORS must be configured BEFORE routes
